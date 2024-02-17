@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +17,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('photo');
 });
+Route::post('/photo', function (Request $request) {
+    // dd($request);
+    Storage::disk('local')->put('example.txt', 'Contents');
+})->name('photo');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
