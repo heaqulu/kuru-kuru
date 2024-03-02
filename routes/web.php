@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,5 +34,18 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/users', function () {
+    $users=User::all();
+    return view('users.index', compact('users'));
+    
+})->name('users.index');
+
+Route::get('/search', function (Request $request) {
+    //dd($request->name);
+    $users=User::where("name", "=", $request->name)->get();
+    return view('users.index', compact('users'));
+    
+})->name('users.search');
 
 require __DIR__.'/auth.php';
